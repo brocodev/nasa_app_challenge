@@ -23,10 +23,10 @@ class _SplashView extends StatefulWidget {
 class _SplashViewState extends State<_SplashView>
     with SingleTickerProviderStateMixin {
   late final AnimationController controller;
+  late final Animation<double> circleAnimation;
 
-  void _animationListener() {
-    if(controller.value >= .8){
-      controller.stop();
+  void animationListener() {
+    if (controller.status == AnimationStatus.completed) {
       context.pushReplacementNamed(AppRoutes.onboarding.name);
     }
   }
@@ -35,34 +35,65 @@ class _SplashViewState extends State<_SplashView>
   void initState() {
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 8),
+      duration: const Duration(seconds: 5),
     )..forward();
-    controller.addListener(_animationListener);
+    circleAnimation = CurvedAnimation(
+      parent: controller,
+      curve: const Interval(.75, 1, curve: Curves.fastOutSlowIn),
+    );
+    controller.addListener(animationListener);
     super.initState();
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    controller
+      ..removeListener(animationListener)
+      ..dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff0f0f0f),
-      body: Column(
+      body: Stack(
+        alignment: Alignment.center,
         children: [
-          const Spacer(),
-          Center(
-            child: Assets.lottie.nasaSymbol.lottie(
-              height: 100,
-              controller: controller,
-            ),
+          Column(
+            children: [
+              const Spacer(),
+              Center(
+                child: Assets.lottie.nasaSymbol.lottie(
+                  height: 100,
+                  controller: controller,
+                ),
+              ),
+              const Spacer(),
+              const CircularProgressIndicator(color: Colors.white),
+              30.verticalSpace,
+            ],
           ),
-          const Spacer(),
-          const CircularProgressIndicator(color: Colors.white),
-          30.verticalSpace,
+          AnimatedBuilder(
+            animation: circleAnimation,
+            builder: (context, _) {
+              return Transform.scale(
+                scale: 3 * circleAnimation.value,
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Color.lerp(
+                        context.scaffoldBackgroundColor,
+                        context.backgroundColor,
+                        circleAnimation.value * 1.5,
+                      ),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
         ],
       ),
     );
