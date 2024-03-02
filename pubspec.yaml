@@ -1,0 +1,55 @@
+name: nasa_app_challenge
+description: A Very Good Project created by Very Good CLI.
+version: 1.0.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.1.0 <4.0.0"
+
+dependencies:
+  bloc: ^8.1.3
+  bloc_concurrency: ^0.2.4
+  cupertino_icons: ^1.0.6
+  device_info_plus: ^9.1.2
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^8.1.4
+  flutter_localizations:
+    sdk: flutter
+  flutter_screenutil: ^5.9.0
+  freezed_annotation: ^2.4.1
+  get_it: ^7.6.7
+  go_router: ^13.2.0
+  injectable: ^2.3.2
+  internet_connection_checker: ^1.0.0+1
+  intl: 0.18.1
+  keyboard_dismisser: ^3.0.0
+  lottie: ^3.1.0
+  nasa_api:
+    path: packages/nasa_api
+  nasa_core:
+    path: packages/nasa_core
+  nasa_library_api:
+    path: packages/nasa_library_api
+  ui_common:
+    path: packages/ui_common
+
+dev_dependencies:
+  bloc_test: ^9.1.6
+  build_runner: ^2.4.8
+  dart_style: 2.3.4
+  flutter_launcher_icons: ^0.13.1
+  flutter_test:
+    sdk: flutter
+  freezed: ^2.4.7
+  injectable_generator: ^2.4.1
+  json_serializable: ^6.7.1
+  mocktail: ^1.0.3
+  very_good_analysis: ^5.1.0
+
+flutter:
+  uses-material-design: true
+  generate: true
+  assets:
+    - assets/icon/
+
