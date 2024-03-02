@@ -13,65 +13,22 @@ class AppFonts {
   /// The Anta font family
   static const String anta = 'packages/$package/Anta';
 
-
   /// App text theme
-  static TextTheme textTheme = TextTheme(
-    bodySmall: TextStyle(
-      fontFamily: AppFonts.anta,
-      fontSize: 12.sp,
-      fontWeight: FontWeight.w400,
-      color: AppColors.textColor,
-    ),
-    bodyMedium: TextStyle(
-      fontFamily: AppFonts.anta,
-      fontSize: 14.sp,
-    ),
-    bodyLarge: TextStyle(
-      fontFamily: AppFonts.anta,
-      fontWeight: FontWeight.w500,
-      fontSize: 16.sp,
-    ),
-    titleMedium: TextStyle(
-      fontFamily: AppFonts.anta,
-      fontSize: 20.sp,
-      fontWeight: FontWeight.w600,
-    ),
-    titleSmall: TextStyle(
-      fontFamily: AppFonts.anta,
-      fontSize: 18.sp,
-    ),
-    titleLarge: TextStyle(
-      fontFamily: AppFonts.anta,
-      fontSize: 22.sp,
-      letterSpacing: 1,
-      color: AppColors.textColor,
-    ),
-    headlineSmall: TextStyle(
-      fontSize: 26.sp,
-      fontFamily: AppFonts.anta,
-      color: AppColors.textColor,
-    ),
-    headlineMedium: TextStyle(
-      fontSize: 34.sp,
-      fontFamily: AppFonts.anta,
-      color: AppColors.textColor,
-    ),
-    headlineLarge: TextStyle(
-      fontSize: 40.sp,
-      fontFamily: AppFonts.anta,
-      color: AppColors.primaryColor,
-    ),
-    displayMedium: TextStyle(
-      fontSize: 45.sp,
-      fontFamily: AppFonts.anta,
-      color: AppColors.textColor,
-    ),
-    displayLarge: TextStyle(
-      fontSize: 55.sp,
-      fontFamily: AppFonts.anta,
-      color: AppColors.primaryColor,
-    ),
-  ).apply(
-    bodyColor: AppColors.textColor,
+  static TextTheme textTheme =  TextTheme(
+    labelSmall: TextStyle(fontFamily: AppFonts.anta, fontSize: 11.sp),
+    labelMedium: TextStyle(fontFamily: AppFonts.anta, fontSize: 12.sp),
+    labelLarge: TextStyle(fontFamily: AppFonts.anta, fontSize: 14.sp),
+    bodySmall: TextStyle(fontFamily: AppFonts.anta, fontSize: 12.sp),
+    bodyMedium: TextStyle(fontFamily: AppFonts.anta, fontSize: 14.sp),
+    bodyLarge: TextStyle(fontFamily: AppFonts.anta, fontSize: 16.sp),
+    titleSmall: TextStyle(fontFamily: AppFonts.anta, fontSize: 14.sp),
+    titleMedium: TextStyle(fontFamily: AppFonts.anta, fontSize: 16.sp),
+    titleLarge: TextStyle(fontFamily: AppFonts.anta, fontSize: 22.sp),
+    headlineSmall: TextStyle(fontFamily: AppFonts.anta, fontSize: 24.sp),
+    headlineMedium: TextStyle(fontFamily: AppFonts.anta, fontSize: 28.sp),
+    headlineLarge: TextStyle(fontFamily: AppFonts.anta, fontSize: 32.sp),
+    displaySmall: TextStyle(fontFamily: AppFonts.anta, fontSize: 36.sp),
+    displayMedium: TextStyle(fontFamily: AppFonts.anta, fontSize: 45.sp),
+    displayLarge: TextStyle(fontFamily: AppFonts.anta, fontSize: 57.sp),
   );
 }

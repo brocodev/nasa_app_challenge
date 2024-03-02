@@ -26,6 +26,7 @@ flutter_gen:
   output: lib/src/assets/
   integrations:
     lottie: true
+    fonts: false
   assets:
     outputs:
       package_parameter_enabled: true
@@ -36,7 +37,7 @@ flutter:
     - assets/images/
     - assets/lottie/
 
-#  fonts:
-#    - family: Comic Neue
-#      fonts:
-#        - asset: assets/fonts/Comic-Neue.ttf
+  fonts:
+    - family: Anta
+      fonts:
+        - asset: assets/fonts/Anta-Regular.ttf
