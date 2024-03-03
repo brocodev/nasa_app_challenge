@@ -1,5 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nasa_app_challenge/features/welcome/presentation/cubits/message_index_cubit.dart';
+import 'package:nasa_app_challenge/features/welcome/presentation/cubits/position_index_cubit.dart';
 import 'package:nasa_app_challenge/l10n/l10n.dart';
 import 'package:ui_common/ui_common.dart';
 
@@ -18,7 +23,13 @@ class _OnboardingPageViewState extends State<OnboardingPageView>
   late final Animation<double> titleEntryAnimation;
   late final Animation<double> buttonEntryAnimation;
 
-  void animationListener() {}
+  void animationListener() {
+    log(controller.status.toString());
+    if (controller.status == AnimationStatus.dismissed) {
+      context.read<MessageIndexCubit>().nextMessage();
+      controller.forward();
+    }
+  }
 
   @override
   void initState() {
@@ -57,31 +68,117 @@ class _OnboardingPageViewState extends State<OnboardingPageView>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           12.verticalSpace,
-          _EntryAnimationWidget(
-            listenable: titleEntryAnimation,
-            child: Padding(
-              padding: 20.edgeInsetsR,
-              child: Text(
-                context.l10n.welcomeToTheNASAAwesomeApp,
-                style: context.displaySmall,
-              ),
-            ),
+          BlocBuilder<MessageIndexCubit, int>(
+            builder: (_, index) {
+              return _EntryAnimationWidget(
+                listenable: titleEntryAnimation,
+                child: [
+                  _TitleText(
+                    padding: 20.edgeInsetsR,
+                    text: context.l10n.welcomeToTheNASAAwesomeApp,
+                  ),
+                  _TitleText(
+                    padding: 20.edgeInsetsL,
+                    text: context.l10n.exploreThingsBeyondPlanetEarth,
+                    textAlign: TextAlign.right,
+                  ),
+                  _TitleText(
+                    padding: 30.edgeInsetsT,
+                    text: context.l10n.andDiscoverTheWondersOfTheCosmos,
+                    textAlign: TextAlign.center,
+                  ),
+                ][index],
+              );
+            },
           ),
           30.verticalSpace,
-          _EntryAnimationWidget(
-            listenable: buttonEntryAnimation,
-            child: Transform.translate(
-              offset: Offset(-12.w, 0),
-              child: TextButton(
-                onPressed: () {},
-                style: TextButton.styleFrom(
-                  padding: 12.edgeInsetsH,
-                ),
-                child: Text(context.l10n.goAhead),
-              ),
-            ),
+          BlocBuilder<MessageIndexCubit, int>(
+            builder: (_, index) {
+              return _EntryAnimationWidget(
+                listenable: buttonEntryAnimation,
+                child: [
+                  LabelButton(
+                    offsetX: -12.w,
+                    onPressed: () {
+                      context.read<PositionIndexCubit>().nextPosition();
+                      controller.reverse();
+                    },
+                    text: context.l10n.goAhead,
+                  ),
+                  LabelButton(
+                    offsetX: 12.w,
+                    alignment: Alignment.centerRight,
+                    onPressed: () {
+                      context.read<PositionIndexCubit>().nextPosition();
+                      controller.reverse();
+                    },
+                    text: context.l10n.goAhead,
+                  ),
+                  LabelButton(
+                    alignment: Alignment.center,
+                    onPressed: () {},
+                    text: context.l10n.startNow,
+                  ),
+                ][index],
+              );
+            },
           ),
         ],
+      ),
+    );
+  }
+}
+
+class LabelButton extends StatelessWidget {
+  const LabelButton({
+    required this.onPressed,
+    required this.text,
+    this.alignment = Alignment.centerLeft,
+    this.offsetX = 0,
+    super.key,
+  });
+
+  final VoidCallback onPressed;
+  final String text;
+  final double offsetX;
+  final Alignment alignment;
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: alignment,
+      child: Transform.translate(
+        offset: Offset(offsetX, 0),
+        child: TextButton(
+          onPressed: onPressed,
+          style: TextButton.styleFrom(padding: 12.edgeInsetsH),
+          child: Text(text),
+        ),
+      ),
+    );
+  }
+}
+
+class _TitleText extends StatelessWidget {
+  const _TitleText({
+    required this.padding,
+    required this.text,
+    this.textAlign,
+    super.key,
+  });
+
+  final EdgeInsets padding;
+  final String text;
+  final TextAlign? textAlign;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: padding,
+      child: Text(
+        text,
+        style: context.displaySmall,
+        textAlign: textAlign,
       ),
     );
   }

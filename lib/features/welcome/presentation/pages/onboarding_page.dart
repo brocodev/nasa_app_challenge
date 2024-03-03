@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nasa_app_challenge/core/core.dart';
+import 'package:nasa_app_challenge/features/welcome/presentation/cubits/message_index_cubit.dart';
+import 'package:nasa_app_challenge/features/welcome/presentation/cubits/position_index_cubit.dart';
 import 'package:nasa_app_challenge/features/welcome/presentation/widgets/onboarding_page_view.dart';
 import 'package:nasa_app_challenge/features/welcome/presentation/widgets/rotating_earth_widget.dart';
 import 'package:nasa_app_challenge/l10n/l10n.dart';
@@ -13,8 +15,11 @@ class OnboardingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => ValueCubit<int>(value: 0),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => PositionIndexCubit(value: 0)),
+        BlocProvider(create: (_) => MessageIndexCubit(value: 0)),
+      ],
       child: const _OnboardingView(),
     );
   }

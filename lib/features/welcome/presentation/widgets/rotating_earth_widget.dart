@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nasa_app_challenge/core/shared/cubits/value_cubit.dart';
 import 'package:nasa_app_challenge/core/shared/widgets/automatic_rotation_widget.dart';
+import 'package:nasa_app_challenge/features/welcome/presentation/cubits/position_index_cubit.dart';
 import 'package:ui_common/ui_common.dart';
 
 class RotatingEarthWidget extends StatelessWidget {
@@ -10,11 +10,11 @@ class RotatingEarthWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ValueCubit<int>, int>(
+    return BlocBuilder<PositionIndexCubit, int>(
       builder: (_, index) {
         return AnimatedPositioned(
-          duration: const Duration(seconds: 3),
-          curve: Curves.fastLinearToSlowEaseIn,
+          duration: const Duration(seconds: 4),
+          curve: Curves.fastOutSlowIn,
           height: 2.5.sh,
           bottom: [
             -1.85.sh,
