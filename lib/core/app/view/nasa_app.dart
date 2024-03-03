@@ -11,7 +11,7 @@ class NasaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      builder: (context, child) {
+      builder: (__, _) {
         return KeyboardDismisser(
           child: MaterialApp.router(
             debugShowCheckedModeBanner: false,

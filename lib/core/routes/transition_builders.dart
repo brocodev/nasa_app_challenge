@@ -15,7 +15,27 @@ enum RouteTransition {
   fadeScale,
 }
 
-Widget buildTransition({
+Page<T> buildTransitionPage<T>({
+  required RouteTransition transition,
+  required Widget child,
+}) {
+  return CustomTransitionPage(
+    transitionsBuilder: (
+      __,
+      animation,
+      _,
+      child,
+    ) =>
+        _buildTransition(
+      transition: transition,
+      animation: animation,
+      child: child,
+    ),
+    child: child,
+  );
+}
+
+Widget _buildTransition({
   required Animation<double> animation,
   required RouteTransition transition,
   required Widget child,

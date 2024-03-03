@@ -35,8 +35,12 @@ class $AssetsLottieGen {
   LottieGenImage get nasaSymbol =>
       const LottieGenImage('assets/lottie/nasa-symbol.json');
 
+  /// File path: assets/lottie/rocket.json
+  LottieGenImage get rocket =>
+      const LottieGenImage('assets/lottie/rocket.json');
+
   /// List of all assets
-  List<LottieGenImage> get values => [nasaSymbol];
+  List<LottieGenImage> get values => [nasaSymbol, rocket];
 }
 
 class Assets {

@@ -3,6 +3,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:nasa_app_challenge/core/core.dart';
 import 'package:nasa_app_challenge/features/welcome/presentation/cubits/message_index_cubit.dart';
 import 'package:nasa_app_challenge/features/welcome/presentation/cubits/position_index_cubit.dart';
 import 'package:nasa_app_challenge/l10n/l10n.dart';
@@ -116,7 +118,8 @@ class _OnboardingPageViewState extends State<OnboardingPageView>
                   ),
                   LabelButton(
                     alignment: Alignment.center,
-                    onPressed: () {},
+                    onPressed: () =>
+                        context.pushReplacementNamed(AppRoutes.home.name),
                     text: context.l10n.startNow,
                   ),
                 ][index],
