@@ -57,7 +57,10 @@ class _HomeView extends StatelessWidget {
             12.verticalSpace.toSliver,
             const SliverToBoxAdapter(
               child: APODImageCard(),
-            )
+            ),
+            const SliverToBoxAdapter(
+              child: Text(String.fromEnvironment('NASA_API_KEY')),
+            ),
           ],
         ),
       ),
