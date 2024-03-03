@@ -1,6 +1,8 @@
 sealed class AppRoutes {
   static const splash = AppRoute._('splash', '/');
   static const onboarding = AppRoute._('onboarding', '/onboarding');
+
+  static const home = AppRoute._('home', '/home');
 }
 
 class AppRoute {

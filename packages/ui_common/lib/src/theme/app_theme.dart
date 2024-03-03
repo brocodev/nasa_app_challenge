@@ -48,17 +48,17 @@ class AppTheme {
     systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
       statusBarColor: Colors.transparent,
     ),
-    color: AppColors.primaryColor,
+    color: AppColors.scaffoldBackgroundColor,
   );
 
   static final _textButtonThemeData = TextButtonThemeData(
     style: TextButton.styleFrom(
-      foregroundColor: AppColors.textColor,
+      foregroundColor: AppColors.textColor2,
       padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
       textStyle: TextStyle(
         fontFamily: AppFonts.anta,
-        fontSize: 12.sp,
-        fontWeight: FontWeight.w700,
+        fontSize: 16.sp,
+        fontWeight: FontWeight.w400,
       ),
       shape: const StadiumBorder(),
     ),

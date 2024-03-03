@@ -4,10 +4,13 @@ sealed class AppColors {
   const AppColors._();
 
   static const primaryColor = Color(0xFFE3282E);
+
   static const primaryColorLight = Color(0xFFF17C7F);
   static const primaryColorDark = Color(0xFF791316);
   static const secondaryColor = Color(0xFF00489B);
+  static const absoluteBlue = Color(0xff0000ff);
   static const textColor = Color(0xFFFFFFFF);
+  static const textColor2 = Color(0x4CFFFFFF);
   static const scaffoldBackgroundColor = Color(0xff0f0f0f);
   static const backgroundColor = Colors.black;
   static const red = Color(0xFFF55371);

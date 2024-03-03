@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nasa_app_challenge/core/core.dart';
 import 'package:nasa_app_challenge/features/welcome/presentation/pages/onboarding_page.dart';
@@ -6,7 +5,7 @@ import 'package:nasa_app_challenge/features/welcome/presentation/pages/splash_pa
 
 final goRouterConfig = GoRouter(
   initialLocation:
-      kDebugMode ? AppRoutes.onboarding.path : AppRoutes.splash.path,
+      AppRoutes.splash.path,
   routes: [
     GoRoute(
       name: AppRoutes.splash.name,

@@ -1,7 +1,10 @@
 {
     "@@locale": "es",
-    "counterAppBarTitle": "Contador",
-    "@counterAppBarTitle": {
-        "description": "Texto mostrado en la AppBar de la página del contador"
-    }
+    "welcomeToTheNASAAwesomeApp": "Welcome to the awesome NASA app",
+    "exploreThingsBeyondPlanetEarth": "Explore Things Beyond Planet Earht",
+    "andDiscoverTheWondersOfTheCosmos": "And discover the wonders of the cosmos",
+    "continue": "Continue",
+    "areYouReady": "Are you ready?",
+    "startNow": "Start now"
+
 }
