@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nasa_app_challenge/core/shared/widgets/automatic_rotation_widget.dart';
+import 'package:nasa_app_challenge/core/core.dart';
 import 'package:nasa_app_challenge/features/welcome/presentation/cubits/position_index_cubit.dart';
 import 'package:ui_common/ui_common.dart';
 

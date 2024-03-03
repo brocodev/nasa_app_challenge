@@ -1,7 +1,10 @@
-import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nasa_api/nasa_api.dart';
 
 @module
 abstract class RegisterModulesAPIs {
-
+  @singleton
+  NasaGovAPI get nasaGovAPI => NasaGovAPI.init(
+        const String.fromEnvironment('NASA_API_KEY'),
+      );
 }

@@ -10,10 +10,12 @@ abstract class APIClient {
   /// API clients for different services
   APIClient({
     required this.baseUrl,
+    Map<String, dynamic> queryParameters = const {},
     this.enableLogging = false,
     this.interceptors = const [],
   }) : dio = Dio(
           BaseOptions(
+            queryParameters: queryParameters,
             baseUrl: baseUrl,
             connectTimeout: const Duration(seconds: 30),
             receiveTimeout: const Duration(seconds: 30),

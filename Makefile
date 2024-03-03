@@ -30,6 +30,9 @@ gen_apk_prod:
 open_apk:
 	open build/app/outputs/flutter-apk/
 
+run_apk:
+	$(flutter) run --flavor production -t lib/main_production.dart --dart-define NASA_API_KEY=7hD9jAYsVfpnKUeVmCdnN92CGbHqDDXY3aCmHWwA
+
 # Build iOS Shortcuts
 gen_ios_dev:
 	$(flutter) build ios --flavor development -t lib/main_development.dart
