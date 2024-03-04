@@ -1,10 +1,12 @@
 {
-    "@@locale": "es",
-    "welcomeToTheNASAAwesomeApp": "Welcome to the awesome NASA app",
-    "exploreThingsBeyondPlanetEarth": "Explore Things Beyond Planet Earht",
-    "andDiscoverTheWondersOfTheCosmos": "And discover the wonders of the cosmos",
-    "continue": "Continue",
-    "areYouReady": "Are you ready?",
-    "startNow": "Start now"
-
+  "@@locale": "es",
+  "welcomeToTheNASAAwesomeApp": "Bienvenido a la increíble aplicación de la NASA",
+  "exploreThingsBeyondPlanetEarth": "Explora cosas más allá del planeta Tierra",
+  "andDiscoverTheWondersOfTheCosmos": "Y descubre las maravillas del cosmos.",
+  "continue": "Continuar",
+  "areYouReady": "¿Estás listo?",
+  "startNow": "Empezar ahora",
+  "skip": "Omitir",
+  "apodAstronomyPictureOfTheDay": "APOD (Astronomic Picture of the Day)",
+  "beforeAPODs": "APODs anteriores"
 }

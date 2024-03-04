@@ -19,6 +19,9 @@ class APODsState with _$APODsState {
 }
 
 extension APODsStateExt on APODsState {
+  bool get isLoading =>
+      whenOrNull(loading: (_) => true, initial: () => true) ?? false;
+
   List<APODFile> get apods =>
       mapOrNull(
         success: (value) => value.apods,
