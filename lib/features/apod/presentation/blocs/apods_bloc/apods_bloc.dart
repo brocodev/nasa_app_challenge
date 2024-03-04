@@ -29,20 +29,23 @@ class APODsBloc extends Bloc<APODsEvent, APODsState> {
     final refresh = event.refresh;
     emit(_Loading(apods: refresh ? [] : state.apods));
     endDate = refresh ? DateTime.now() : endDate;
-    final startDate = endDate.subtract(const Duration(days: 20));
+    final startDate = endDate.subtract(const Duration(days: 30));
     final request = APODRequest.dateRange(
       starDate: startDate,
       endDate: endDate,
     );
     final res = await _useCase(request);
     res.when(
-      success: (apods) => emit(
-        _Success(
-          apods: refresh ? apods : [...apods, ...state.apods],
-        ),
-      ),
+      success: (apods) {
+        final reversedApods = apods.reversed.toList();
+        return emit(
+          _Success(
+            apods: refresh ? reversedApods : [...state.apods, ...reversedApods],
+          ),
+        );
+      },
       error: (exception) => emit(_Error(exception: exception)),
     );
-    endDate = startDate;
+    endDate = startDate.subtract(const Duration(days: 1));
   }
 }

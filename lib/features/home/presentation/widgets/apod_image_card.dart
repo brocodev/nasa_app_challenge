@@ -22,8 +22,8 @@ class APODImageCard extends StatelessWidget {
     );
     return AspectRatio(
       aspectRatio: aspectRatio,
-      child: InkWell(
-        onTap: () async {},
+      child: GestureDetector(
+        onTap: () {},
         child: ClipRRect(
           borderRadius: 12.borderRadiusA,
           child: Stack(
@@ -47,6 +47,13 @@ class APODImageCard extends StatelessWidget {
                   ),
                 ),
               ),
+              if (apod.mapOrNull(video: (value) => true) ?? false)
+                const Center(
+                  child: Icon(
+                    Icons.play_circle_rounded,
+                    color: Colors.white54,
+                  ),
+                ),
               Positioned(
                 bottom: 12.h,
                 left: 16.w,

@@ -40,48 +40,93 @@ class _HomeView extends StatelessWidget {
       ),
       body: Padding(
         padding: 16.edgeInsetsA.copyWith(bottom: 0),
-        child: BlocBuilder<APODsBloc, APODsState>(
-          builder: (_, state) {
-            final apods = state.apods;
-            final isLoading = state.isLoading;
-            return CustomScrollView(
-              slivers: [
-                const HomeSearchTextField(),
-                12.verticalSpace.toSliver,
-                SliverToBoxAdapter(
-                  child: Text(context.l10n.apodAstronomyPictureOfTheDay),
-                ),
-                12.verticalSpace.toSliver,
-                SliverToBoxAdapter(
-                  child: apods.isEmpty
-                      ? const ShimmerCard(aspectRatio: 1.8)
-                      : APODImageCard(apod: apods.last, aspectRatio: 1.8),
-                ),
-                20.verticalSpace.toSliver,
-                SliverToBoxAdapter(
-                  child: Text(context.l10n.beforeAPODs),
-                ),
-                12.verticalSpace.toSliver,
-                SliverGrid.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 20,
-                    crossAxisSpacing: 20,
-                  ),
-                  itemCount: (apods.length - 1) + (isLoading ? 5 : 0),
-                  itemBuilder: (context, index) {
-                    if (apods.length <= index) {
-                      return const ShimmerCard(aspectRatio: 1);
-                    }
-                    final apod = apods[index];
-                    return APODImageCard(apod: apod);
-                  },
-                ),
-              ],
-            );
-          },
-        ),
+        child: const _HomeScrollBody(),
       ),
+    );
+  }
+}
+
+class _HomeScrollBody extends StatefulWidget {
+  const _HomeScrollBody();
+
+  @override
+  State<_HomeScrollBody> createState() => _HomeScrollBodyState();
+}
+
+class _HomeScrollBodyState extends State<_HomeScrollBody> {
+  late final ScrollController _controller;
+
+  @override
+  void initState() {
+    _controller = ScrollController();
+    _controller.addListener(_scrollListener);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    if (_controller.offset == _controller.position.maxScrollExtent) {
+      context.read<APODsBloc>().add(const APODsEvent.fetchAPODs());
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<APODsBloc, APODsState>(
+      builder: (_, state) {
+        final apods = state.apods;
+        final isLoading = state.isLoading;
+        return RefreshIndicator(
+          onRefresh: () async => context
+              .read<APODsBloc>()
+              .add(const APODsEvent.fetchAPODs(refresh: true)),
+          child: CustomScrollView(
+            controller: _controller,
+            slivers: [
+              const HomeSearchTextField(),
+              12.verticalSpace.toSliver,
+              SliverToBoxAdapter(
+                child: Text(context.l10n.apodAstronomyPictureOfTheDay),
+              ),
+              12.verticalSpace.toSliver,
+              SliverToBoxAdapter(
+                child: apods.isEmpty
+                    ? const ShimmerCard(aspectRatio: 1.8)
+                    : APODImageCard(apod: apods.first, aspectRatio: 1.8),
+              ),
+              20.verticalSpace.toSliver,
+              SliverToBoxAdapter(
+                child: Text(context.l10n.beforeAPODs),
+              ),
+              12.verticalSpace.toSliver,
+              SliverGrid.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 20,
+                  crossAxisSpacing: 20,
+                ),
+                itemCount: (apods.length - 1) + (isLoading ? 5 : 0),
+                itemBuilder: (context, index) {
+                  if ((apods.length - 1) <= index) {
+                    return const ShimmerCard(aspectRatio: 1);
+                  }
+                  final apod = apods[index + 1];
+                  return APODImageCard(apod: apod);
+                },
+              ),
+              if (apods.isNotEmpty && isLoading) ...[
+                40.verticalSpace.toSliver,
+              ],
+              20.verticalSpace.toSliver,
+            ],
+          ),
+        );
+      },
     );
   }
 }
