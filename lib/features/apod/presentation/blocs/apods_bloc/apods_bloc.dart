@@ -20,7 +20,7 @@ class APODsBloc extends Bloc<APODsEvent, APODsState> {
 
   final GetAPODUseCase _useCase;
 
-  DateTime endDate = DateTime.now();
+  DateTime _endDate = DateTime.now();
 
   Future<void> _onFetchAPODs(
     _FetchAPODs event,
@@ -28,11 +28,11 @@ class APODsBloc extends Bloc<APODsEvent, APODsState> {
   ) async {
     final refresh = event.refresh;
     emit(_Loading(apods: refresh ? [] : state.apods));
-    endDate = refresh ? DateTime.now() : endDate;
-    final startDate = endDate.subtract(const Duration(days: 30));
+    _endDate = refresh ? DateTime.now() : _endDate;
+    final startDate = _endDate.subtract(const Duration(days: 30));
     final request = APODRequest.dateRange(
       starDate: startDate,
-      endDate: endDate,
+      endDate: _endDate,
     );
     final res = await _useCase(request);
     res.when(
@@ -46,6 +46,6 @@ class APODsBloc extends Bloc<APODsEvent, APODsState> {
       },
       error: (exception) => emit(_Error(exception: exception)),
     );
-    endDate = startDate.subtract(const Duration(days: 1));
+    _endDate = startDate.subtract(const Duration(days: 1));
   }
 }
