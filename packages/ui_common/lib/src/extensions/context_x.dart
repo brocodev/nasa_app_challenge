@@ -25,10 +25,7 @@ extension ContextExt on BuildContext {
   }
 }
 
-
 extension ContextThemeColors on BuildContext {
-  Color get textColor => Theme.of(this).textTheme.bodyLarge!.color!;
-
   Color get primaryColor => Theme.of(this).primaryColor;
 
   Color get primaryColorLight => Theme.of(this).primaryColorLight;

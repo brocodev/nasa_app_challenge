@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ui_common/src/theme/app_colors.dart';
 import 'package:ui_common/src/theme/app_fonts.dart';
+import 'package:ui_common/ui_common.dart';
 
 /// Theme of the App
 class AppTheme {
@@ -29,6 +30,17 @@ class AppTheme {
       progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: AppColors.textColor,
       ),
+      inputDecorationTheme: InputDecorationTheme(
+        contentPadding: 13.edgeInsetsA,
+        border: OutlineInputBorder(
+          borderRadius: 12.borderRadiusA,
+          borderSide: const BorderSide(color: Colors.white54),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: 12.borderRadiusA,
+          borderSide: const BorderSide(color: Colors.white54),
+        ),
+      ),
       highlightColor: Colors.transparent,
       textButtonTheme: _textButtonThemeData,
       elevatedButtonTheme: _elevatedButtonThemeData,
@@ -38,6 +50,7 @@ class AppTheme {
 
   static final _appBarTheme = AppBarTheme(
     centerTitle: true,
+    scrolledUnderElevation: 0,
     titleTextStyle: TextStyle(
       fontSize: 18.sp,
       fontFamily: AppFonts.anta,

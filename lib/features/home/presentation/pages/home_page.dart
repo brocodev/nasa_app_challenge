@@ -1,7 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nasa_app_challenge/features/apod/presentation/blocs/apods_bloc/apods_bloc.dart';
 import 'package:nasa_app_challenge/features/home/presentation/widgets/apod_image_card.dart';
+import 'package:nasa_app_challenge/features/home/presentation/widgets/home_drawer.dart';
+import 'package:nasa_app_challenge/features/home/presentation/widgets/home_search_text_field.dart';
 import 'package:ui_common/ui_common.dart';
 
 class HomePage extends StatelessWidget {
@@ -19,49 +22,59 @@ class _HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const HomeDrawer(),
       appBar: AppBar(
         title: Center(
           child: Assets.images.nasaSymbol.image(
             height: 24.h,
+            width: 120.w,
           ),
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.favorite_border),
+          ),
+        ],
       ),
       body: Padding(
-        padding: 16.edgeInsetsA,
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Explore the space',
-                  prefixIcon: const Icon(
-                    CupertinoIcons.search,
-                    color: Colors.white54,
-                  ),
-                  contentPadding: 13.edgeInsetsA,
-                  border: OutlineInputBorder(
-                    borderRadius: 12.borderRadiusA,
-                    borderSide: const BorderSide(color: Colors.white54),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: 12.borderRadiusA,
-                    borderSide: const BorderSide(color: Colors.white54),
-                  ),
+        padding: 16.edgeInsetsA.copyWith(bottom: 0),
+        child: BlocBuilder<APODsBloc, APODsState>(
+          builder: (_, state) {
+            final apods = state.apods;
+            return CustomScrollView(
+              slivers: [
+                const HomeSearchTextField(),
+                12.verticalSpace.toSliver,
+                const SliverToBoxAdapter(
+                  child: Text('APOD (Astronomic Picture of the Day)'),
                 ),
-              ),
-            ),
-            20.verticalSpace.toSliver,
-            const SliverToBoxAdapter(
-              child: Text('APOD (Astronomic Photo of the Day)'),
-            ),
-            12.verticalSpace.toSliver,
-            const SliverToBoxAdapter(
-              child: APODImageCard(),
-            ),
-            const SliverToBoxAdapter(
-              child: Text(String.fromEnvironment('NASA_API_KEY')),
-            ),
-          ],
+                12.verticalSpace.toSliver,
+                SliverToBoxAdapter(
+                  child: apods.isEmpty
+                      ? const CircularProgressIndicator()
+                      : APODImageCard(apod: apods.last, aspectRatio: 1.8),
+                ),
+                20.verticalSpace.toSliver,
+                const SliverToBoxAdapter(
+                  child: Text('Before APODs'),
+                ),
+                12.verticalSpace.toSliver,
+                SliverGrid.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 20,
+                    crossAxisSpacing: 20,
+                  ),
+                  itemCount: apods.length - 1,
+                  itemBuilder: (context, index) {
+                    final apod = apods[index];
+                    return APODImageCard(apod: apod);
+                  },
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

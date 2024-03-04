@@ -27,32 +27,22 @@ class APODsBloc extends Bloc<APODsEvent, APODsState> {
     Emitter<APODsState> emit,
   ) async {
     final refresh = event.refresh;
-    state.maybeWhen(
-      success: (value) => emit(_Loading(apods: refresh ? [] : value)),
-      orElse: () => emit(const _Loading()),
-    );
+    emit(_Loading(apods: refresh ? [] : state.apods));
     endDate = refresh ? DateTime.now() : endDate;
     final startDate = endDate.subtract(const Duration(days: 20));
-
-    final res = await _useCase(
-      APODRequest.dateRange(
-        starDate: startDate,
-        endDate: endDate,
-      ),
+    final request = APODRequest.dateRange(
+      starDate: startDate,
+      endDate: endDate,
     );
+    final res = await _useCase(request);
     res.when(
-      success: (apods) {
-        state.maybeMap(
-          success: (success) => emit(
-            success.copyWith(
-              apods: refresh ? apods : [...apods, ...success.apods],
-            ),
-          ),
-          orElse: () => emit(_Success(apods: apods)),
-        );
-        endDate = startDate;
-      },
+      success: (apods) => emit(
+        _Success(
+          apods: refresh ? apods : [...apods, ...state.apods],
+        ),
+      ),
       error: (exception) => emit(_Error(exception: exception)),
     );
+    endDate = startDate;
   }
 }

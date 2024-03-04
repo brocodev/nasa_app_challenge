@@ -1,34 +1,36 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get_it/get_it.dart';
-import 'package:nasa_app_challenge/features/apod/domain/repositories/apod_repository.dart';
+import 'package:nasa_app_challenge/features/apod/domain/entities/apod_file.dart';
 import 'package:ui_common/ui_common.dart';
 
 class APODImageCard extends StatelessWidget {
   const APODImageCard({
+    required this.apod,
+    this.aspectRatio = 1,
     super.key,
   });
 
+  final APODFile apod;
+  final double aspectRatio;
+
   @override
   Widget build(BuildContext context) {
+    final url = apod.map(
+      video: (value) => value.thumbnailUrl,
+      image: (value) => value.url,
+    );
     return AspectRatio(
-      aspectRatio: 1.8,
+      aspectRatio: aspectRatio,
       child: InkWell(
-        onTap: () async {
-          await GetIt.I.get<APODRepository>().getAPODsFromDateRange(
-                DateTime.now().subtract(
-                  const Duration(days: 15),
-                ),
-                DateTime.now(),
-              );
-        },
+        onTap: () async {},
         child: ClipRRect(
           borderRadius: 12.borderRadiusA,
           child: Stack(
             fit: StackFit.expand,
             children: [
-              Image.network(
-                'https://apod.nasa.gov/apod/image/2403/IM_Odysseus_landing-2048x1118.png',
+              CachedNetworkImage(
+                imageUrl: url,
                 fit: BoxFit.cover,
               ),
               const DecoratedBox(
@@ -53,14 +55,15 @@ class APODImageCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      'APOD (Astronomic Photo of the Day)',
+                      apod.title,
                       style: context.bodySmall.copyWith(
                         color: Colors.white70,
                       ),
                       maxLines: 1,
                     ),
                     Text(
-                      'Description about the photo and new relevant information ...',
+                      apod.explanation,
+                      overflow: TextOverflow.ellipsis,
                       style: context.labelSmall.copyWith(
                         color: Colors.white54,
                       ),

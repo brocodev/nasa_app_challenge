@@ -17,3 +17,13 @@ class APODsState with _$APODsState {
     @Default([]) List<APODFile> apods,
   }) = _Error;
 }
+
+extension APODsStateExt on APODsState {
+  List<APODFile> get apods =>
+      mapOrNull(
+        success: (value) => value.apods,
+        loading: (value) => value.apods,
+        error: (value) => value.apods,
+      ) ??
+      [];
+}
