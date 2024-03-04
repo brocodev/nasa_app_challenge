@@ -7,12 +7,15 @@ import 'package:ui_common/ui_common.dart';
 class APODImageCard extends StatelessWidget {
   const APODImageCard({
     required this.apod,
+    required this.onTap,
     this.aspectRatio = 1,
     super.key,
   });
 
   final APODFile apod;
   final double aspectRatio;
+
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,7 @@ class APODImageCard extends StatelessWidget {
     return AspectRatio(
       aspectRatio: aspectRatio,
       child: GestureDetector(
-        onTap: () {},
+        onTap: onTap,
         child: ClipRRect(
           borderRadius: 12.borderRadiusA,
           child: Stack(

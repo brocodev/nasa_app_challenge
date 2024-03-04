@@ -23,6 +23,11 @@ class AppTheme {
         backgroundColor: AppColors.backgroundColor,
         errorColor: AppColors.red,
       ),
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+        shape: StadiumBorder(),
+        backgroundColor: Colors.white,
+        foregroundColor: AppColors.scaffoldBackgroundColor,
+      ),
       iconTheme: const IconThemeData(
         color: AppColors.textColor,
       ),

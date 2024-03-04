@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:nasa_app_challenge/core/core.dart';
 import 'package:nasa_app_challenge/features/apod/presentation/blocs/apods_bloc/apods_bloc.dart';
 import 'package:nasa_app_challenge/features/home/presentation/widgets/apod_image_card.dart';
 import 'package:nasa_app_challenge/features/home/presentation/widgets/home_drawer.dart';
@@ -97,7 +99,12 @@ class _HomeScrollBodyState extends State<_HomeScrollBody> {
               SliverToBoxAdapter(
                 child: apods.isEmpty
                     ? const ShimmerCard(aspectRatio: 1.8)
-                    : APODImageCard(apod: apods.first, aspectRatio: 1.8),
+                    : APODImageCard(
+                        onTap: () =>
+                            context.pushNamed(AppRoutes.apod.name, extra: 0),
+                        apod: apods.first,
+                        aspectRatio: 1.8,
+                      ),
               ),
               20.verticalSpace.toSliver,
               SliverToBoxAdapter(
@@ -115,8 +122,15 @@ class _HomeScrollBodyState extends State<_HomeScrollBody> {
                   if ((apods.length - 1) <= index) {
                     return const ShimmerCard(aspectRatio: 1);
                   }
-                  final apod = apods[index + 1];
-                  return APODImageCard(apod: apod);
+                  final fixIndex = index + 1;
+                  final apod = apods[fixIndex];
+                  return APODImageCard(
+                    onTap: () => context.pushNamed(
+                      AppRoutes.apod.name,
+                      extra: fixIndex,
+                    ),
+                    apod: apod,
+                  );
                 },
               ),
               if (apods.isNotEmpty && isLoading) ...[

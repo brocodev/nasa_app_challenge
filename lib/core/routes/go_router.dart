@@ -39,11 +39,11 @@ final goRouterConfig = GoRouter(
       ),
       routes: [
         GoRoute(
-          name: AppRoutes.apodDetail.name,
-          path: AppRoutes.apodDetail.path,
+          name: AppRoutes.apod.name,
+          path: AppRoutes.apod.path,
           builder: (__, state) => BlocProvider.value(
             value: apodsBloc,
-            child: const APODsPage(),
+            child: APODsPage(index: state.extra! as int),
           ),
         ),
       ],

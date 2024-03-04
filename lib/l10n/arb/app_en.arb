@@ -1,5 +1,6 @@
 {
   "@@locale": "en",
+  "lang": "en",
   "welcomeToTheNASAAwesomeApp": "Welcome to the awesome NASA Flutter App",
   "exploreThingsBeyondPlanetEarth": "Explore Things Beyond Planet Earth",
   "andDiscoverTheWondersOfTheCosmos": "And discover the wonders of the cosmos",
