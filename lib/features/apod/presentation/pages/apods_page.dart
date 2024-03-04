@@ -1,9 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nasa_app_challenge/core/core.dart';
 import 'package:nasa_app_challenge/features/apod/presentation/blocs/apods_bloc/apods_bloc.dart';
+import 'package:nasa_app_challenge/features/apod/presentation/widgets/apod_rotating_image_card.dart';
 import 'package:nasa_app_challenge/l10n/l10n.dart';
 import 'package:ui_common/ui_common.dart';
 
@@ -39,15 +39,30 @@ class _APODsView extends StatefulWidget {
 
 class _APODsViewState extends State<_APODsView> {
   late final PageController controller;
-  int index = 0;
 
-  void _pageListener() {}
+  late int index;
+
+  late int auxIndex;
+  late double percent;
+  late double auxPercent;
+
+  void _pageListener() {
+    index = controller.page!.floor();
+    auxIndex = index + 1;
+    percent = (controller.page! - index).abs();
+    auxPercent = 1.0 - percent;
+    // TODO(me): Add bloc state handler
+    setState(() {});
+  }
 
   @override
   void initState() {
     controller = PageController(initialPage: widget.initialPage);
     controller.addListener(_pageListener);
     index = widget.initialPage;
+    auxIndex = index + 1;
+    percent = 0.0;
+    auxPercent = 1.0 - percent;
     super.initState();
   }
 
@@ -65,72 +80,41 @@ class _APODsViewState extends State<_APODsView> {
           fit: StackFit.expand,
           children: [
             Positioned.fill(
-              bottom: .4.sh,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  CachedNetworkImage(
-                    imageUrl: state.apods[index].map(
-                      video: (value) => value.thumbnailUrl,
-                      image: (value) => value.url,
+              bottom: .3.sh,
+              left: -.5.sw,
+              top: -.2.sw,
+              right: -.5.sw,
+              child: ClipRRect(
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    APODRotatingImageCard(
+                      apod: state
+                          .apods[auxIndex.clamp(0, state.apods.length - 1)],
+                      animation: AlwaysStoppedAnimation(1 - auxPercent),
                     ),
-                    fit: BoxFit.cover,
-                  ),
-                  DecoratedBox(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.black,
-                          Colors.black54,
-                          Colors.black38,
-                          Colors.black54,
-                          context.scaffoldBackgroundColor,
-                        ],
+                    APODRotatingImageCard(
+                      apod: state.apods[index],
+                      animation: AlwaysStoppedAnimation(1 - percent),
+                    ),
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.black,
+                            Colors.black54,
+                            Colors.black38,
+                            Colors.black54,
+                            context.scaffoldBackgroundColor,
+                            context.scaffoldBackgroundColor,
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  // Positioned.fill(
-                  //   left: 20.w,
-                  //   child: Row(
-                  //     crossAxisAlignment: CrossAxisAlignment.end,
-                  //     children: [
-                  //       Expanded(
-                  //         child: Column(
-                  //           mainAxisAlignment: MainAxisAlignment.end,
-                  //           crossAxisAlignment: CrossAxisAlignment.stretch,
-                  //           children: [
-                  //             Text(
-                  //               apod.title,
-                  //               style: context.titleMedium.copyWith(
-                  //                 color: Colors.white70,
-                  //               ),
-                  //             ),
-                  //             Text(
-                  //               apod.date.dayMonthYear(context.l10n),
-                  //               overflow: TextOverflow.ellipsis,
-                  //               style: context.bodyMedium.copyWith(
-                  //                 color: Colors.white38,
-                  //               ),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //       FloatingActionButton(
-                  //         onPressed: () {},
-                  //         mini: true,
-                  //         child: apod.map(
-                  //           video: (_) => const Icon(Icons.play_arrow_rounded),
-                  //           image: (_) =>
-                  //               const Icon(Icons.zoom_out_map_rounded),
-                  //         ),
-                  //       ),
-                  //       12.horizontalSpace,
-                  //     ],
-                  //   ),
-                  // ),
-                ],
+                  ],
+                ),
               ),
             ),
             PageView.builder(

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:ui_common/ui_common.dart';
 
 class HomeDrawer extends StatelessWidget {
   const HomeDrawer({
@@ -12,9 +13,18 @@ class HomeDrawer extends StatelessWidget {
     return ClipRRect(
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-        child: const Drawer(
-          backgroundColor: Color(0x880f0f0f),
+        child: Drawer(
+          backgroundColor: context.scaffoldBackgroundColor.withOpacity(.6),
           elevation: 0,
+          child: SafeArea(
+            minimum: 20.edgeInsetsH,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Assets.images.nasaGlobe.image(height: kToolbarHeight),
+              ],
+            ),
+          ),
         ),
       ),
     );
