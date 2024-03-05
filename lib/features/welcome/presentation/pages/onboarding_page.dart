@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nasa_app_challenge/core/core.dart';
 import 'package:nasa_app_challenge/features/welcome/presentation/cubits/message_index_cubit.dart';
+import 'package:nasa_app_challenge/features/welcome/presentation/cubits/open_home_cubit.dart';
 import 'package:nasa_app_challenge/features/welcome/presentation/cubits/position_index_cubit.dart';
 import 'package:nasa_app_challenge/features/welcome/presentation/widgets/onboarding_page_view.dart';
 import 'package:nasa_app_challenge/features/welcome/presentation/widgets/rotating_earth_widget.dart';
@@ -19,27 +20,90 @@ class OnboardingPage extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => PositionIndexCubit(value: 0)),
         BlocProvider(create: (_) => MessageIndexCubit(value: 0)),
+        BlocProvider(create: (_) => OpenHomeCubit()),
       ],
       child: const _OnboardingView(),
     );
   }
 }
 
-class _OnboardingView extends StatelessWidget {
+class _OnboardingView extends StatefulWidget {
   const _OnboardingView();
 
   @override
+  State<_OnboardingView> createState() => _OnboardingViewState();
+}
+
+class _OnboardingViewState extends State<_OnboardingView>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController outAnimationController;
+
+  void animationListener() {
+    if (outAnimationController.status == AnimationStatus.completed) {
+      context.pushReplacementNamed(AppRoutes.home.name);
+    }
+  }
+
+  @override
+  void initState() {
+    outAnimationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 400),
+    )..addListener(animationListener);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    outAnimationController
+      ..removeListener(animationListener)
+      ..dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: context.backgroundColor,
-      appBar: const _OnboardingAppBar(),
-      body: const Stack(
+    return BlocListener<OpenHomeCubit, bool>(
+      listener: (_, state) {
+        if (state) outAnimationController.forward();
+      },
+      child: Stack(
         alignment: Alignment.center,
-        fit: StackFit.expand,
         children: [
-          RotatingEarthWidget(),
-          SafeArea(
-            child: OnboardingPageView(),
+          Scaffold(
+            backgroundColor: context.backgroundColor,
+            appBar: const _OnboardingAppBar(),
+            body: const Stack(
+              alignment: Alignment.center,
+              fit: StackFit.expand,
+              children: [
+                RotatingEarthWidget(),
+                SafeArea(
+                  child: OnboardingPageView(),
+                ),
+              ],
+            ),
+          ),
+          AnimatedBuilder(
+            animation: outAnimationController,
+            builder: (context, _) {
+              return Transform.scale(
+                scale: 3 * outAnimationController.value,
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: Color.lerp(
+                        context.backgroundColor,
+                        context.scaffoldBackgroundColor,
+                        outAnimationController.value * 1.5,
+                      ),
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -78,7 +142,7 @@ class _OnboardingAppBar extends StatelessWidget implements PreferredSize {
         title: Assets.images.nasaGlobe.image(height: kToolbarHeight.sp),
         actions: [
           TextButton(
-            onPressed: () => context.pushReplacementNamed(AppRoutes.home.name),
+            onPressed: () => context.read<OpenHomeCubit>().change(true),
             style: TextButton.styleFrom(padding: EdgeInsets.zero),
             child: Text(
               context.l10n.skip,

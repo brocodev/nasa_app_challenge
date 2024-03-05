@@ -58,6 +58,7 @@ class _ViewerAPODView extends StatelessWidget {
           ),
         ),
         image: (value) => ZoomContainer(
+          maxScale: 6,
           child: CachedNetworkImage(
             imageUrl: value.hdurl,
             placeholder: (_, __) => _ImageLoadingIndicator(apod: apod),

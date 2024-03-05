@@ -24,25 +24,38 @@ class _HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const HomeDrawer(),
-      appBar: AppBar(
-        title: Center(
-          child: Assets.images.nasaSymbol.image(
-            height: 24.h,
-            width: 120.w,
+    return TweenAnimationBuilder<double>(
+      duration: const Duration(milliseconds: 700),
+      tween: Tween(begin: 0, end: 1),
+      builder: (context, value, child) {
+        return Opacity(
+          opacity: value,
+          child: Transform.translate(
+            offset: Offset(0, 30 * (1 - value)),
+            child: child,
           ),
+        );
+      },
+      child: Scaffold(
+        drawer: const HomeDrawer(),
+        appBar: AppBar(
+          title: Center(
+            child: Assets.images.nasaSymbol.image(
+              height: 24.h,
+              width: 120.w,
+            ),
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.favorite_border),
+            ),
+          ],
         ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.favorite_border),
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: 16.edgeInsetsA.copyWith(bottom: 0),
-        child: const _HomeScrollBody(),
+        body: Padding(
+          padding: 16.edgeInsetsA.copyWith(bottom: 0),
+          child: const _HomeScrollBody(),
+        ),
       ),
     );
   }

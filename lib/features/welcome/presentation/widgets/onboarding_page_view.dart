@@ -1,11 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
-import 'package:nasa_app_challenge/core/core.dart';
 import 'package:nasa_app_challenge/features/welcome/presentation/cubits/message_index_cubit.dart';
+import 'package:nasa_app_challenge/features/welcome/presentation/cubits/open_home_cubit.dart';
 import 'package:nasa_app_challenge/features/welcome/presentation/cubits/position_index_cubit.dart';
 import 'package:nasa_app_challenge/l10n/l10n.dart';
 import 'package:ui_common/ui_common.dart';
@@ -26,7 +23,6 @@ class _OnboardingPageViewState extends State<OnboardingPageView>
   late final Animation<double> buttonEntryAnimation;
 
   void animationListener() {
-    log(controller.status.toString());
     if (controller.status == AnimationStatus.dismissed) {
       context.read<MessageIndexCubit>().nextMessage();
       controller.forward();
@@ -118,8 +114,7 @@ class _OnboardingPageViewState extends State<OnboardingPageView>
                   ),
                   LabelButton(
                     alignment: Alignment.center,
-                    onPressed: () =>
-                        context.pushReplacementNamed(AppRoutes.home.name),
+                    onPressed: () => context.read<OpenHomeCubit>().change(true),
                     text: context.l10n.startNow,
                   ),
                 ][index],

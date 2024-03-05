@@ -32,7 +32,7 @@ final goRouterConfig = GoRouter(
     GoRoute(
       name: AppRoutes.home.name,
       path: AppRoutes.home.path,
-      pageBuilder: (_, state) => buildTransitionPage(
+      pageBuilder: (_, __) => buildTransitionPage(
         transition: RouteTransition.fade,
         child: BlocProvider(
           create: (_) => apodsBloc..add(const APODsEvent.fetchAPODs()),

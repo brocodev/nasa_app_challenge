@@ -18,15 +18,11 @@ enum RouteTransition {
 Page<T> buildTransitionPage<T>({
   required RouteTransition transition,
   required Widget child,
+  Duration transitionDuration = const Duration(milliseconds: 300),
 }) {
   return CustomTransitionPage(
-    transitionsBuilder: (
-      __,
-      animation,
-      _,
-      child,
-    ) =>
-        _buildTransition(
+    transitionDuration: transitionDuration,
+    transitionsBuilder: (__, animation, _, child) => _buildTransition(
       transition: transition,
       animation: animation,
       child: child,

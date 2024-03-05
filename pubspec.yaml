@@ -33,6 +33,8 @@ dependencies:
     path: packages/nasa_core
   nasa_library_api:
     path: packages/nasa_library_api
+  path_provider: ^2.1.2
+  permission_handler: ^11.3.0
   share_plus: ^7.2.2
   ui_common:
     path: packages/ui_common

@@ -71,7 +71,6 @@ class APODRotatingImageCard extends StatelessWidget {
             clipper: _CircleClipper(dimension: .4.sw),
             child: CachedNetworkImage(
               imageUrl: imageUrl,
-              alignment: Alignment(factorChange, 0),
               fit: BoxFit.cover,
             ),
           ),
@@ -94,16 +93,13 @@ class _AnimationWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScaleTransition(
-      scale: Tween<double>(begin: 1.4, end: 1).animate(animation),
-      child: FadeTransition(
-        opacity: animation,
-        child: RotationTransition(
-          turns: direction == ScrollDirection.forward
-              ? Tween<double>(begin: 1, end: 0).animate(animation)
-              : animation,
-          child: child,
-        ),
+    return FadeTransition(
+      opacity: animation,
+      child: RotationTransition(
+        turns: direction == ScrollDirection.forward
+            ? Tween<double>(begin: 1, end: 0).animate(animation)
+            : animation,
+        child: child,
       ),
     );
   }
