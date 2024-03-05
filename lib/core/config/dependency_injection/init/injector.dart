@@ -13,6 +13,5 @@ Future<void> configure(Environment env) async {
       statusBarIconBrightness: Brightness.light,
     ),
   );
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   GetIt.instance.init(environment: env.name);
 }

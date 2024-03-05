@@ -35,6 +35,8 @@ dependencies:
     path: packages/nasa_library_api
   ui_common:
     path: packages/ui_common
+  url_launcher: ^6.2.5
+  webview_flutter: ^4.7.0
 
 dev_dependencies:
   bloc_test: ^9.1.6

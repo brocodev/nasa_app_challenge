@@ -44,24 +44,30 @@ class _APODsViewState extends State<_APODsView> {
 
   late int index;
 
+  late int pageIndex;
+
   late int auxIndex;
   late double percent;
   late double auxPercent;
 
   ScrollDirection direction = ScrollDirection.idle;
 
+  // TODO(me): Add bloc state handler
   void _pageListener() {
     index = controller.page!.floor();
     auxIndex = index + 1;
-    percent = (controller.page! - index).abs();
+    percent = controller.page! - index;
     auxPercent = 1.0 - percent;
     direction = controller.position.userScrollDirection;
-    print(controller.position.userScrollDirection);
+    // direction = pageIndex <= controller.page!
+    //     ? ScrollDirection.forward
+    //     : ScrollDirection.reverse;
     setState(() {});
   }
 
   @override
   void initState() {
+    pageIndex = widget.initialPage;
     controller = PageController(initialPage: widget.initialPage);
     controller.addListener(_pageListener);
     index = widget.initialPage;
@@ -96,11 +102,13 @@ class _APODsViewState extends State<_APODsView> {
                     APODRotatingImageCard(
                       apod: state
                           .apods[auxIndex.clamp(0, state.apods.length - 1)],
-                      animation: AlwaysStoppedAnimation(1 - auxPercent),
+                      factorChange: auxPercent,
+                      direction: direction,
                     ),
                     APODRotatingImageCard(
                       apod: state.apods[index],
-                      animation: AlwaysStoppedAnimation(1 - percent),
+                      factorChange: percent,
+                      direction: direction,
                     ),
                     DecoratedBox(
                       decoration: BoxDecoration(
@@ -123,6 +131,10 @@ class _APODsViewState extends State<_APODsView> {
               ),
             ),
             PageView.builder(
+              onPageChanged: (value) {
+                print('VALUE $value');
+                setState(() => pageIndex = value);
+              },
               controller: controller,
               itemBuilder: (context, index) {
                 final apod = state.apods[index];

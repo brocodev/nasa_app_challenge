@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nasa_app_challenge/features/apod/domain/entities/apod_file.dart';
 import 'package:ui_common/ui_common.dart';
@@ -7,12 +8,14 @@ import 'package:ui_common/ui_common.dart';
 class APODRotatingImageCard extends StatelessWidget {
   const APODRotatingImageCard({
     required this.apod,
-    required this.animation,
+    required this.factorChange,
+    required this.direction,
     super.key,
   });
 
   final APODFile apod;
-  final Animation<double> animation;
+  final double factorChange;
+  final ScrollDirection direction;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +23,7 @@ class APODRotatingImageCard extends StatelessWidget {
       video: (value) => value.thumbnailUrl,
       image: (value) => value.url,
     );
+    final animation = AlwaysStoppedAnimation(1 - factorChange);
     final interval1 = CurvedAnimation(
       parent: animation,
       curve: const Interval(.5, 1),
@@ -40,6 +44,7 @@ class APODRotatingImageCard extends StatelessWidget {
           padding: 1.edgeInsetsB,
           child: _AnimationWrapper(
             animation: interval3,
+            direction: direction,
             child: CachedNetworkImage(
               imageUrl: imageUrl,
               fit: BoxFit.cover,
@@ -48,6 +53,7 @@ class APODRotatingImageCard extends StatelessWidget {
         ),
         _AnimationWrapper(
           animation: interval2,
+          direction: direction,
           child: ClipPath(
             clipper: _CircleClipper(dimension: .85.sw),
             child: CachedNetworkImage(
@@ -60,10 +66,12 @@ class APODRotatingImageCard extends StatelessWidget {
         ),
         _AnimationWrapper(
           animation: interval1,
+          direction: direction,
           child: ClipPath(
             clipper: _CircleClipper(dimension: .4.sw),
             child: CachedNetworkImage(
               imageUrl: imageUrl,
+              alignment: Alignment(factorChange, 0),
               fit: BoxFit.cover,
             ),
           ),
@@ -77,18 +85,25 @@ class _AnimationWrapper extends StatelessWidget {
   const _AnimationWrapper({
     required this.child,
     required this.animation,
+    required this.direction,
   });
 
   final Widget child;
   final Animation<double> animation;
+  final ScrollDirection direction;
 
   @override
   Widget build(BuildContext context) {
     return ScaleTransition(
-      scale: Tween<double>(begin: 1.4, end: 1).animate(animation),
+      scale: Tween<double>(begin: 1, end: 1).animate(animation),
       child: FadeTransition(
         opacity: animation,
-        child: RotationTransition(turns: animation, child: child),
+        child: RotationTransition(
+          turns: direction == ScrollDirection.forward
+              ? Tween<double>(begin: 1, end: 0).animate(animation)
+              : animation,
+          child: child,
+        ),
       ),
     );
   }

@@ -10,5 +10,6 @@
   "skip": "Skip",
   "apodAstronomyPictureOfTheDay": "APOD (Astronomic Picture of the Day)",
   "beforeAPODs": "Before APODs",
-  "loadingHDImage": "Loading HD image"
+  "loadingHDImage": "Loading HD image",
+  "loadingVideo": "Loading video"
 }
