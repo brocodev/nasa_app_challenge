@@ -6,14 +6,14 @@ import 'package:go_router/go_router.dart';
 import 'package:nasa_app_challenge/core/core.dart';
 import 'package:nasa_app_challenge/features/apod/presentation/blocs/apods_bloc/apods_bloc.dart';
 import 'package:nasa_app_challenge/features/apod/presentation/cubits/page_values/page_values_cubit.dart';
-import 'package:nasa_app_challenge/features/apod/presentation/widgets/apod_rotating_image_card.dart';
+import 'package:nasa_app_challenge/features/apod/presentation/widgets/apod_custom_animated_switcher.dart';
 import 'package:nasa_app_challenge/l10n/l10n.dart';
 import 'package:ui_common/ui_common.dart';
 
 class APODsPage extends StatelessWidget {
   const APODsPage({
-    super.key,
     required this.index,
+    super.key,
   });
 
   final int index;
@@ -64,7 +64,6 @@ class _APODsViewState extends State<_APODsView> {
   void initState() {
     controller = PageController(initialPage: widget.initialPage);
     controller.addListener(_pageListener);
-    ;
     super.initState();
   }
 
@@ -102,51 +101,12 @@ class _APODsViewState extends State<_APODsView> {
                 left: -.5.sw,
                 top: -.2.sw,
                 right: -.5.sw,
-                child: ClipRRect(
-                  child: BlocBuilder<PageValuesCubit, PageValuesState>(
-                    builder: (context, state) {
-                      return Stack(
-                        fit: StackFit.expand,
-                        children: [
-                          APODRotatingImageCard(
-                            apod: apods[state.nextIndex.clamp(
-                              0,
-                              apods.length - 1,
-                            )],
-                            factorChange: state.nextPercent,
-                            direction: state.direction,
-                          ),
-                          APODRotatingImageCard(
-                            apod: apods[state.index],
-                            factorChange: state.percent,
-                            direction: state.direction,
-                          ),
-                          DecoratedBox(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                                  Colors.black,
-                                  Colors.black54,
-                                  Colors.black38,
-                                  Colors.black54,
-                                  context.scaffoldBackgroundColor,
-                                  context.scaffoldBackgroundColor,
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
+                child: APODCustomAnimatedSwitcher(apods: apods),
               ),
               PageView.builder(
                 controller: controller,
                 itemBuilder: (context, index) {
-                  final apod = state.apods[index];
+                  final apod = apods[index];
                   return SingleChildScrollView(
                     padding: 20.edgeInsetsH.copyWith(bottom: 20.h),
                     child: Column(
