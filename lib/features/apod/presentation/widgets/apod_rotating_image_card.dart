@@ -53,7 +53,7 @@ class APODRotatingImageCard extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl: imageUrl,
               colorBlendMode: BlendMode.darken,
-              color: Colors.black26,
+              color: Colors.black12,
               fit: BoxFit.cover,
             ),
           ),
@@ -77,7 +77,6 @@ class _AnimationWrapper extends StatelessWidget {
   const _AnimationWrapper({
     required this.child,
     required this.animation,
-    super.key,
   });
 
   final Widget child;

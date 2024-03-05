@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nasa_app_challenge/core/core.dart';
 import 'package:nasa_app_challenge/features/apod/presentation/blocs/apods_bloc/apods_bloc.dart';
 import 'package:nasa_app_challenge/features/apod/presentation/widgets/apod_rotating_image_card.dart';
@@ -46,12 +48,15 @@ class _APODsViewState extends State<_APODsView> {
   late double percent;
   late double auxPercent;
 
+  ScrollDirection direction = ScrollDirection.idle;
+
   void _pageListener() {
     index = controller.page!.floor();
     auxIndex = index + 1;
     percent = (controller.page! - index).abs();
     auxPercent = 1.0 - percent;
-    // TODO(me): Add bloc state handler
+    direction = controller.position.userScrollDirection;
+    print(controller.position.userScrollDirection);
     setState(() {});
   }
 
@@ -153,7 +158,10 @@ class _APODsViewState extends State<_APODsView> {
                             ),
                           ),
                           FloatingActionButton(
-                            onPressed: () {},
+                            onPressed: () => context.pushNamed(
+                              AppRoutes.viewApod.name,
+                              extra: apod,
+                            ),
                             mini: true,
                             child: apod.map(
                               video: (_) =>

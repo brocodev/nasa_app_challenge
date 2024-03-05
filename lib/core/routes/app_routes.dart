@@ -3,6 +3,7 @@ sealed class AppRoutes {
   static const onboarding = AppRoute._('onboarding', '/onboarding');
   static const home = AppRoute._('home', '/home');
   static const apod = AppRoute._('apod', 'apod');
+  static const viewApod = AppRoute._('viewApod', 'viewApod');
 }
 
 class AppRoute {

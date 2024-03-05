@@ -117,7 +117,7 @@ class _HomeScrollBodyState extends State<_HomeScrollBody> {
                   mainAxisSpacing: 20,
                   crossAxisSpacing: 20,
                 ),
-                itemCount: (apods.length - 1) + (isLoading ? 5 : 0),
+                itemCount: (apods.length - 1) + (isLoading ? 4 : 0),
                 itemBuilder: (context, index) {
                   if ((apods.length - 1) <= index) {
                     return const ShimmerCard(aspectRatio: 1);

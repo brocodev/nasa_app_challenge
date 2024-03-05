@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:nasa_app_challenge/core/core.dart';
+import 'package:nasa_app_challenge/features/apod/domain/entities/apod_file.dart';
 import 'package:nasa_app_challenge/features/apod/presentation/blocs/apods_bloc/apods_bloc.dart';
 import 'package:nasa_app_challenge/features/apod/presentation/pages/apods_page.dart';
+import 'package:nasa_app_challenge/features/apod/presentation/pages/viewer_apod_page.dart';
 import 'package:nasa_app_challenge/features/home/presentation/pages/home_page.dart';
 import 'package:nasa_app_challenge/features/welcome/presentation/pages/onboarding_page.dart';
 import 'package:nasa_app_challenge/features/welcome/presentation/pages/splash_page.dart';
@@ -12,7 +14,7 @@ import 'package:nasa_app_challenge/features/welcome/presentation/pages/splash_pa
 final apodsBloc = GetIt.I.get<APODsBloc>();
 
 final goRouterConfig = GoRouter(
-  initialLocation: kDebugMode ? AppRoutes.home.path : AppRoutes.splash.path,
+  initialLocation: kDebugMode ? AppRoutes.splash.path : AppRoutes.splash.path,
   routes: [
     GoRoute(
       name: AppRoutes.splash.name,
@@ -45,6 +47,15 @@ final goRouterConfig = GoRouter(
             value: apodsBloc,
             child: APODsPage(index: state.extra! as int),
           ),
+          routes: [
+            GoRoute(
+              name: AppRoutes.viewApod.name,
+              path: AppRoutes.viewApod.path,
+              builder: (__, state) => ViewerAPODPage(
+                apod: state.extra! as APODFile,
+              ),
+            ),
+          ],
         ),
       ],
     ),
