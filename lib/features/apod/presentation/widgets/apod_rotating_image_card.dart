@@ -59,7 +59,7 @@ class APODRotatingImageCard extends StatelessWidget {
             child: CachedNetworkImage(
               imageUrl: imageUrl,
               colorBlendMode: BlendMode.darken,
-              color: Colors.black12,
+              color: Colors.black.withOpacity(.2),
               fit: BoxFit.cover,
             ),
           ),
@@ -95,7 +95,7 @@ class _AnimationWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScaleTransition(
-      scale: Tween<double>(begin: 1, end: 1).animate(animation),
+      scale: Tween<double>(begin: 1.4, end: 1).animate(animation),
       child: FadeTransition(
         opacity: animation,
         child: RotationTransition(

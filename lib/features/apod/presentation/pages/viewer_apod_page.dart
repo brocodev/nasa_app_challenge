@@ -30,6 +30,7 @@ class _ViewerAPODView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: kToolbarHeight.sp,
         title: Text(
           apod.title,
           maxLines: 2,
