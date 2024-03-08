@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:ui_common/src/theme/app_colors.dart';
-import 'package:ui_common/src/theme/app_fonts.dart';
 import 'package:ui_common/ui_common.dart';
 
 /// Theme of the App
@@ -19,9 +17,16 @@ class AppTheme {
       appBarTheme: _appBarTheme,
       textTheme: AppFonts.textTheme,
       colorScheme: ColorScheme.fromSwatch(
-        accentColor: AppColors.secondaryColor,
+        accentColor: AppColors.primaryColor,
         backgroundColor: AppColors.backgroundColor,
         errorColor: AppColors.red,
+      ),
+      tabBarTheme: const TabBarTheme(
+        splashFactory: NoSplash.splashFactory,
+        labelColor: Colors.white,
+        unselectedLabelColor: Colors.white30,
+        indicatorColor: AppColors.red,
+        dividerHeight: 0,
       ),
       floatingActionButtonTheme: const FloatingActionButtonThemeData(
         shape: StadiumBorder(),
@@ -31,7 +36,7 @@ class AppTheme {
       iconTheme: const IconThemeData(
         color: AppColors.textColor,
       ),
-      indicatorColor: AppColors.secondaryColor,
+      indicatorColor: AppColors.primaryColor,
       progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: AppColors.textColor,
       ),

@@ -707,13 +707,6 @@ packages:
       relative: true
     source: path
     version: "0.1.0+1"
-  nasa_library_api:
-    dependency: "direct main"
-    description:
-      path: "packages/nasa_library_api"
-      relative: true
-    source: path
-    version: "0.1.0+1"
   nested:
     dependency: transitive
     description:

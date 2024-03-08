@@ -13,7 +13,7 @@ class APODRequest with _$APODRequest {
     required DateTime endDate,
   }) = _DateRange;
 
-  const factory APODRequest.count({
+  const factory APODRequest.random({
     required int count,
   }) = _Count;
 }

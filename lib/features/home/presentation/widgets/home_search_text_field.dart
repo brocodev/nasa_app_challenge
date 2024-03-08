@@ -10,13 +10,15 @@ class HomeSearchTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      pinned: true,
+      floating: true,
       automaticallyImplyLeading: false,
       toolbarHeight: (kToolbarHeight + 12).sp,
-      actions: const [
+      actions: [
         Expanded(
           child: TextField(
-            decoration: InputDecoration(
+            readOnly: true,
+            onTap: () {},
+            decoration: const InputDecoration(
               hintText: 'Explore the space',
               prefixIcon: Icon(
                 CupertinoIcons.search,
