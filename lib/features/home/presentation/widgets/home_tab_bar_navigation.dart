@@ -76,8 +76,6 @@ class _LightIndicator extends Decoration {
 class _LinePainter extends BoxPainter {
   @override
   void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
-    // The [ImageConfiguration] object passed as the third
-    // argument must, at a minimum, have a non-null [Size].
     final dx = offset.dx;
     final w = configuration.size!.width;
     const color = Colors.white;
