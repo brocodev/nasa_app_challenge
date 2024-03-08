@@ -1,3 +1,3 @@
 export 'cubits/cubits.dart';
-export 'utils/device_info_utils.dart';
+export 'extensions/extensions.dart';
 export 'widgets/widgets.dart';

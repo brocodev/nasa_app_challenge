@@ -2,9 +2,12 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nasa_app_challenge/core/core.dart';
 import 'package:nasa_app_challenge/features/apod/domain/entities/apod_file.dart';
+import 'package:nasa_app_challenge/features/apod/presentation/blocs/download_file/download_file_bloc.dart';
+import 'package:nasa_app_challenge/features/apod/presentation/widgets/download_apod_button.dart';
 import 'package:nasa_app_challenge/l10n/l10n.dart';
 import 'package:ui_common/ui_common.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -17,14 +20,27 @@ class ViewerAPODPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _ViewerAPODView(apod: apod);
+    return BlocProvider(
+      create: (_) => DownloadFileBloc(),
+      child: _ViewerAPODView(apod: apod),
+    );
   }
 }
 
-class _ViewerAPODView extends StatelessWidget {
+class _ViewerAPODView extends StatefulWidget {
   const _ViewerAPODView({required this.apod});
 
   final APODFile apod;
+
+  @override
+  State<_ViewerAPODView> createState() => _ViewerAPODViewState();
+}
+
+class _ViewerAPODViewState extends State<_ViewerAPODView> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,25 +48,19 @@ class _ViewerAPODView extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: kToolbarHeight.sp,
         title: Text(
-          apod.title,
+          widget.apod.title,
           maxLines: 2,
           style: context.titleSmall,
         ),
         actions: [
-          apod.map(
+          widget.apod.map(
             video: (_) => const SizedBox.shrink(),
-            image: (_) => IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.download_rounded,
-                color: Colors.white38,
-              ),
-            ),
+            image: (apod) => DownloadAPODButton(url: apod.hdurl),
           ),
         ],
       ),
       backgroundColor: context.backgroundColor,
-      body: apod.map(
+      body: widget.apod.map(
         video: (value) => Center(
           child: AspectRatio(
             aspectRatio: 1.4,
@@ -61,7 +71,7 @@ class _ViewerAPODView extends StatelessWidget {
           maxScale: 6,
           child: CachedNetworkImage(
             imageUrl: value.hdurl,
-            placeholder: (_, __) => _ImageLoadingIndicator(apod: apod),
+            placeholder: (_, __) => _ImageLoadingIndicator(apod: widget.apod),
           ),
         ),
       ),
@@ -127,18 +137,6 @@ class _WebViewWidgetState extends State<_WebViewWidget> {
             return AnimatedSwitcher(
               duration: kThemeChangeDuration,
               switchInCurve: Curves.decelerate,
-              transitionBuilder: (child, animation) {
-                return FadeTransition(
-                  opacity: animation,
-                  child: SlideTransition(
-                    position: Tween(
-                      begin: const Offset(0, .1),
-                      end: Offset.zero,
-                    ).animate(animation),
-                    child: child,
-                  ),
-                );
-              },
               child: value == 100
                   ? WebViewWidget(controller: controller)
                   : _ImageLoadingIndicator(apod: widget.apod),

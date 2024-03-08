@@ -16,7 +16,7 @@ extension ContextExt on BuildContext {
     ScaffoldMessenger.of(this).showSnackBar(
       SnackBar(
         duration: const Duration(seconds: 5),
-        padding: const EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.all(20),
         elevation: 0,
         backgroundColor: Colors.transparent,
         content: snackBar,

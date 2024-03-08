@@ -83,7 +83,7 @@ class _APODsViewState extends State<_APODsView> {
           IconButton(
             onPressed: () async {},
             icon: const Icon(
-              Icons.download_rounded,
+              Icons.share,
               color: Colors.white38,
             ),
           ),

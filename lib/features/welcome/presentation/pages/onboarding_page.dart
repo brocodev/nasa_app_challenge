@@ -48,7 +48,7 @@ class _OnboardingViewState extends State<_OnboardingView>
   void initState() {
     outAnimationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 600),
     )..addListener(animationListener);
     super.initState();
   }

@@ -60,3 +60,7 @@ class APODRepositoryImp implements APODRepository {
     );
   }
 }
+
+extension on DateTime {
+  String get yearMonthDay => '$year-$month-$day';
+}

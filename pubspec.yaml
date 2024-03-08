@@ -44,12 +44,12 @@ dependencies:
 dev_dependencies:
   bloc_test: ^9.1.6
   build_runner: ^2.4.8
-  dart_style: 2.3.4
+  dart_style: ^2.3.6
   flutter_launcher_icons: ^0.13.1
   flutter_test:
     sdk: flutter
   freezed: ^2.4.7
-  injectable_generator: ^2.4.1
+  injectable_generator: ^2.4.2
   json_serializable: ^6.7.1
   mocktail: ^1.0.3
   very_good_analysis: ^5.1.0

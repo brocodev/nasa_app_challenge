@@ -27,7 +27,8 @@ class _HomeView extends StatelessWidget {
     return TweenAnimationBuilder<double>(
       duration: const Duration(milliseconds: 700),
       tween: Tween(begin: 0, end: 1),
-      builder: (context, value, child) {
+      curve: Curves.fastOutSlowIn,
+      builder: (_, value, child) {
         return Opacity(
           opacity: value,
           child: Transform.translate(

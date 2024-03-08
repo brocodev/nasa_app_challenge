@@ -25,6 +25,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+                android:name="flutterEmbedding"
+                android:value="2" />
+
         <provider
                 android:name="vn.hunghd.flutterdownloader.DownloadedFileProvider"
                 android:authorities="${applicationId}.flutter_downloader.provider"
@@ -34,9 +38,6 @@
                     android:name="android.support.FILE_PROVIDER_PATHS"
                     android:resource="@xml/provider_paths" />
         </provider>
-        <meta-data
-                android:name="flutterEmbedding"
-                android:value="2" />
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
