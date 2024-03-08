@@ -18,11 +18,9 @@ class HomeDrawer extends StatelessWidget {
           elevation: 0,
           child: SafeArea(
             minimum: 20.edgeInsetsH,
-            child: Column(
+            child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Assets.images.nasaGlobe.image(height: kToolbarHeight),
-              ],
+              children: [],
             ),
           ),
         ),
