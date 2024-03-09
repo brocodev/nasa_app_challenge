@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:nasa_app_challenge/features/apod/presentation/blocs/download_file/download_file_bloc.dart';
 import 'package:path_provider/path_provider.dart' as path;
+import 'package:permission_handler/permission_handler.dart';
 import 'package:ui_common/ui_common.dart';
 
 class DownloadAPODButton extends StatefulWidget {
@@ -22,7 +23,7 @@ class DownloadAPODButton extends StatefulWidget {
 
 class _DownloadAPODButtonState extends State<DownloadAPODButton> {
   final ReceivePort _port = ReceivePort();
-  static const _kDownloadPort = 'download_port';
+  static const _kDownloadPort = 'task_download_port';
   String? _taskId;
 
   @pragma('vm:entry-point')
@@ -42,6 +43,7 @@ class _DownloadAPODButtonState extends State<DownloadAPODButton> {
   Future<void> startDownload() async {
     final bloc = context.read<DownloadFileBloc>();
     // TODO(me): Added request permission logic
+
     final dir = await path.getDownloadsDirectory();
     _taskId = await FlutterDownloader.enqueue(
       url: widget.url,
@@ -95,7 +97,13 @@ class _DownloadAPODButtonState extends State<DownloadAPODButton> {
           onPressed: () {
             state.whenOrNull(
               initial: startDownload,
-              completed: (taskId) => FlutterDownloader.open(taskId: taskId),
+              completed: (taskId) async {
+                final status = await Permission.photos.request();
+                if (status.isPermanentlyDenied) {
+                  await openAppSettings();
+                }
+                return FlutterDownloader.open(taskId: taskId);
+              },
             );
           },
           icon: Stack(

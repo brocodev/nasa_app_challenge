@@ -10,6 +10,7 @@ import 'package:nasa_app_challenge/features/apod/presentation/pages/viewer_apod_
 import 'package:nasa_app_challenge/features/home/presentation/pages/home_page.dart';
 import 'package:nasa_app_challenge/features/searches/presentation/pages/media_content_detail.dart';
 import 'package:nasa_app_challenge/features/searches/presentation/pages/search_contents_page.dart';
+import 'package:nasa_app_challenge/features/searches/presentation/pages/viewer_content_page.dart';
 import 'package:nasa_app_challenge/features/welcome/presentation/pages/onboarding_page.dart';
 import 'package:nasa_app_challenge/features/welcome/presentation/pages/splash_page.dart';
 
@@ -62,17 +63,25 @@ final goRouterConfig = GoRouter(
       ],
     ),
     GoRoute(
-        name: AppRoutes.search.name,
-        path: AppRoutes.search.path,
-        builder: (__, _) => const SearchContentsPage(),
-        routes: [
-          GoRoute(
-            name: AppRoutes.mediaContent.name,
-            path: AppRoutes.mediaContent.path,
-            builder: (__, state) => MediaContentPage(
-              content: state.extra! as MediaContent,
-            ),
+      name: AppRoutes.search.name,
+      path: AppRoutes.search.path,
+      builder: (__, _) => const SearchContentsPage(),
+      routes: [
+        GoRoute(
+          name: AppRoutes.mediaContent.name,
+          path: AppRoutes.mediaContent.path,
+          builder: (__, state) => MediaContentPage(
+            content: state.extra! as MediaContent,
           ),
-        ]),
+        ),
+        GoRoute(
+          name: AppRoutes.mediaContentViewer.name,
+          path: AppRoutes.mediaContentViewer.path,
+          builder: (__, state) => ViewerContentPage(
+            content: state.extra! as MediaContent,
+          ),
+        ),
+      ],
+    ),
   ],
 );

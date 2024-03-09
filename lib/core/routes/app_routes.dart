@@ -7,6 +7,8 @@ sealed class AppRoutes {
 
   static const search = AppRoute._('search', '/search');
   static const mediaContent = AppRoute._('content', 'mediaContent');
+  static const mediaContentViewer =
+      AppRoute._('contentViewer', 'mediaContentViewer');
 }
 
 class AppRoute {

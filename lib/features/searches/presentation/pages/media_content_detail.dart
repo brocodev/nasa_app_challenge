@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:nasa_app_challenge/core/core.dart';
 import 'package:nasa_app_challenge/l10n/l10n.dart';
 import 'package:ui_common/ui_common.dart';
@@ -103,7 +104,10 @@ class MediaContentPage extends StatelessWidget {
                       ),
                     ),
                     FloatingActionButton(
-                      onPressed: () {},
+                      onPressed: () => context.pushNamed(
+                        AppRoutes.mediaContentViewer.name,
+                        extra: content,
+                      ),
                       mini: true,
                       child: data.map(
                         video: (_) => const Icon(Icons.play_arrow_rounded),
@@ -131,18 +135,9 @@ class MediaContentPage extends StatelessWidget {
                 ],
               ],
             ),
-          )
+          ),
         ],
       ),
     );
-  }
-}
-
-class _MediaContentView extends StatelessWidget {
-  const _MediaContentView();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold();
   }
 }
