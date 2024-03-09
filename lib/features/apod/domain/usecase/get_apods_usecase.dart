@@ -20,7 +20,7 @@ class GetAPODUseCase {
         );
       },
       dateRange: _repository.getAPODsFromDateRange,
-      count: _repository.getRandomAPODs,
+      random: _repository.getRandomAPODs,
     );
   }
 }

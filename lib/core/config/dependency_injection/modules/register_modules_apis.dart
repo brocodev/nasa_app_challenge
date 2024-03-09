@@ -6,4 +6,6 @@ abstract class RegisterModulesAPIs {
   NasaGovAPI get nasaGovAPI => NasaGovAPI.init(
         const String.fromEnvironment('NASA_API_KEY'),
       );
+
+  NasaImagesAPI get nasaImagesApi => NasaImagesAPI.init();
 }

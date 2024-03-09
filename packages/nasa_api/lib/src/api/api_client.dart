@@ -19,7 +19,6 @@ class NasaImagesAPI extends APIClient {
   NasaImagesAPI._({
     required super.baseUrl,
     super.enableLogging,
-    super.queryParameters,
   });
 
   factory NasaImagesAPI.init() => NasaImagesAPI._(

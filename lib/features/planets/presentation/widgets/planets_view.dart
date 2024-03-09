@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ui_common/ui_common.dart';
 
 class PlanetsView extends StatelessWidget {
@@ -7,16 +7,22 @@ class PlanetsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return ListView(
+      padding: 20.edgeInsetsA,
       children: [
-        Expanded(child: PageView()),
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: 20.borderRadiusT,
-            ),
+        Center(
+          child: Text(
+            'Solar system',
+            style: context.titleMedium,
           ),
         ),
+        4.verticalSpace,
+        // PageView.builder(
+        //   scrollDirection: Axis.horizontal,
+        //   itemBuilder: (context, index) {
+        //     return Card();
+        //   },
+        // ),
       ],
     );
   }
