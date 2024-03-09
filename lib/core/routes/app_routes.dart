@@ -4,6 +4,9 @@ sealed class AppRoutes {
   static const home = AppRoute._('home', '/home');
   static const apod = AppRoute._('apod', 'apod');
   static const viewApod = AppRoute._('viewApod', 'viewApod');
+
+  static const search = AppRoute._('search', '/search');
+  static const mediaContent = AppRoute._('content', 'mediaContent');
 }
 
 class AppRoute {

@@ -42,6 +42,10 @@ class AppTheme {
       ),
       inputDecorationTheme: InputDecorationTheme(
         contentPadding: 13.edgeInsetsA,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: 12.borderRadiusA,
+          borderSide: const BorderSide(color: Colors.white70, width: 2),
+        ),
         border: OutlineInputBorder(
           borderRadius: 12.borderRadiusA,
           borderSide: const BorderSide(color: Colors.white54),

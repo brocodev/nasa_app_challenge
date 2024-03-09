@@ -8,6 +8,8 @@ import 'package:nasa_app_challenge/features/apod/presentation/blocs/apods_bloc/a
 import 'package:nasa_app_challenge/features/apod/presentation/pages/apods_page.dart';
 import 'package:nasa_app_challenge/features/apod/presentation/pages/viewer_apod_page.dart';
 import 'package:nasa_app_challenge/features/home/presentation/pages/home_page.dart';
+import 'package:nasa_app_challenge/features/searches/presentation/pages/media_content_detail.dart';
+import 'package:nasa_app_challenge/features/searches/presentation/pages/search_contents_page.dart';
 import 'package:nasa_app_challenge/features/welcome/presentation/pages/onboarding_page.dart';
 import 'package:nasa_app_challenge/features/welcome/presentation/pages/splash_page.dart';
 
@@ -59,5 +61,18 @@ final goRouterConfig = GoRouter(
         ),
       ],
     ),
+    GoRoute(
+        name: AppRoutes.search.name,
+        path: AppRoutes.search.path,
+        builder: (__, _) => const SearchContentsPage(),
+        routes: [
+          GoRoute(
+            name: AppRoutes.mediaContent.name,
+            path: AppRoutes.mediaContent.path,
+            builder: (__, state) => MediaContentPage(
+              content: state.extra! as MediaContent,
+            ),
+          ),
+        ]),
   ],
 );

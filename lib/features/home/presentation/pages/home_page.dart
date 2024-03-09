@@ -51,10 +51,10 @@ class _HomeViewState extends State<_HomeView>
             ApodsHomeView(),
             PlanetsView(),
             Center(
-              child: Text('View 3'),
+              child: Text('Video library'),
             ),
             Center(
-              child: Text('View 4'),
+              child: Text('Podcasts & Audio files'),
             ),
           ],
         ),

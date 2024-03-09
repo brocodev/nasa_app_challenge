@@ -11,7 +11,7 @@ class MediaContent with _$MediaContent {
   const factory MediaContent({
     @JsonKey(name: 'href') required String collection,
     required List<MediaData> data,
-    required List<Link> links,
+    List<Link>? links,
   }) = _MediaContent;
 
   factory MediaContent.fromJson(Map<String, dynamic> json) =>

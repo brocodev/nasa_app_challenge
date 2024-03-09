@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:nasa_api/nasa_api.dart';
 import 'package:nasa_app_challenge/core/core.dart';
 import 'package:nasa_app_challenge/core/shared/domain/entities/search_media_response.dart';
@@ -5,6 +6,7 @@ import 'package:nasa_app_challenge/core/shared/domain/repositories/media_content
 import 'package:nasa_app_challenge/core/shared/domain/requests/media_content_request.dart';
 import 'package:nasa_core/nasa_core.dart';
 
+@Injectable(as: MediaContentRepository)
 class MediaContentRepositoryImp implements MediaContentRepository {
   MediaContentRepositoryImp(this._api);
 
