@@ -36,8 +36,9 @@ class ViewerContentPage extends StatelessWidget {
           if (snapshot.hasData) {
             final urls =
                 snapshot.data?.whenOrNull(success: (data) => data) ?? [];
-            final url =
-                urls.firstWhere((element) => element.contains('~medium.'));
+            final index =
+                urls.indexWhere((element) => element.contains('~medium.'));
+            final url = index != -1 ? urls[index] : urls.first;
             return content.data.first.map(
               // TODO(me): Switch to a video player
               video: (value) {

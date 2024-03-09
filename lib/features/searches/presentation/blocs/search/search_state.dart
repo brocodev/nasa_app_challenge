@@ -6,6 +6,9 @@ class SearchState with _$SearchState {
 
   const factory SearchState.loading() = _Loading;
 
+  const factory SearchState.fetching({required List<MediaContent> results}) =
+      _Fetching;
+
   const factory SearchState.success({required List<MediaContent> results}) =
       _Success;
 
