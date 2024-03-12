@@ -61,12 +61,30 @@ class _ViewerAPODViewState extends State<_ViewerAPODView> {
       ),
       backgroundColor: context.backgroundColor,
       body: widget.apod.map(
-        video: (value) => Center(
-          child: AspectRatio(
-            aspectRatio: 1.4,
-            child: _WebViewWidget(apod: value),
-          ),
-        ),
+        video: (value) {
+          return Center(
+            child: AspectRatio(
+              aspectRatio: 1.4,
+              child: MediaWebViewPlayer(
+                url: value.url,
+                loadingPlaceholder: _ImageLoadingIndicator(apod: value),
+                onNavigationRequest: (request) {
+                  if (request.url == value.url) {
+                    return NavigationDecision.navigate;
+                  }
+                  if (request.isMainFrame) {
+                    launchUrl(
+                      Uri.parse(request.url),
+                      mode: LaunchMode.externalApplication,
+                    );
+                    return NavigationDecision.prevent;
+                  }
+                  return NavigationDecision.navigate;
+                },
+              ),
+            ),
+          );
+        },
         image: (value) => ZoomContainer(
           maxScale: 6,
           child: CachedNetworkImage(
@@ -75,75 +93,6 @@ class _ViewerAPODViewState extends State<_ViewerAPODView> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _WebViewWidget extends StatefulWidget {
-  const _WebViewWidget({
-    required this.apod,
-  });
-
-  final APODFile apod;
-
-  @override
-  State<_WebViewWidget> createState() => _WebViewWidgetState();
-}
-
-class _WebViewWidgetState extends State<_WebViewWidget> {
-  late final WebViewController controller;
-  final ValueNotifier<int> progressNotifier = ValueNotifier(0);
-
-  void _initWebViewController() {
-    controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color(0x00000000))
-      ..enableZoom(false)
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onProgress: (progress) => progressNotifier.value = progress,
-          onPageFinished: (_) => progressNotifier.value = 100,
-          onNavigationRequest: (request) {
-            if (request.url == widget.apod.url) {
-              return NavigationDecision.navigate;
-            }
-            if (request.isMainFrame) {
-              launchUrl(
-                Uri.parse(request.url),
-                mode: LaunchMode.externalApplication,
-              );
-              return NavigationDecision.prevent;
-            }
-            return NavigationDecision.navigate;
-          },
-        ),
-      )
-      ..loadRequest(Uri.parse(widget.apod.url));
-  }
-
-  @override
-  void initState() {
-    _initWebViewController();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        ValueListenableBuilder<int>(
-          valueListenable: progressNotifier,
-          builder: (__, value, _) {
-            return AnimatedSwitcher(
-              duration: kThemeChangeDuration,
-              switchInCurve: Curves.decelerate,
-              child: value == 100
-                  ? WebViewWidget(controller: controller)
-                  : _ImageLoadingIndicator(apod: widget.apod),
-            );
-          },
-        ),
-      ],
     );
   }
 }

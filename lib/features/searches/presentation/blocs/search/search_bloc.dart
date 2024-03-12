@@ -23,15 +23,17 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   int _page = 1;
   String _text = '';
 
+  MediaContentRequest _request = const MediaContentRequest();
+
   Future<void> _onPerformSearch(
     _PerformSearch event,
     Emitter<SearchState> emit,
   ) async {
     emit(const _Loading());
     _page = 1;
-    _text = event.text;
+    _request = event.request;
     final res = await _repository.searchMediaContent(
-      MediaContentRequest(page: _page, query: _text),
+      _request.copyWith(page: _page),
     );
     res.when(
       success: (data) => emit(_Success(results: data)),
@@ -45,7 +47,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         emit(_Fetching(results: results));
         _page++;
         final res = await _repository.searchMediaContent(
-          MediaContentRequest(page: _page, query: _text),
+          _request.copyWith(page: _page),
         );
         res.when(
           success: (data) => emit(_Success(results: [...results, ...data])),

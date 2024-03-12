@@ -80,7 +80,9 @@ class _SearchContentsViewState extends State<_SearchContentsView> {
                   autofocus: true,
                   onSubmitted: (value) {
                     context.read<SearchBloc>().add(
-                          SearchEvent.performSearch(value),
+                          SearchEvent.performSearch(
+                            MediaContentRequest(query: value),
+                          ),
                         );
                   },
                   textInputAction: TextInputAction.search,

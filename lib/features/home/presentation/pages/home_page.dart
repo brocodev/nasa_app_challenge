@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nasa_app_challenge/features/home/presentation/widgets/apods_home_view.dart';
 import 'package:nasa_app_challenge/features/home/presentation/widgets/home_drawer.dart';
 import 'package:nasa_app_challenge/features/home/presentation/widgets/home_tab_bar_navigation.dart';
-import 'package:nasa_app_challenge/features/planets/presentation/widgets/planets_view.dart';
 import 'package:ui_common/ui_common.dart';
 
 class HomePage extends StatelessWidget {
@@ -49,7 +48,9 @@ class _HomeViewState extends State<_HomeView>
           controller: controller,
           children: const [
             ApodsHomeView(),
-            PlanetsView(),
+            Center(
+              child: Text('Solar system'),
+            ),
             Center(
               child: Text('Video library'),
             ),

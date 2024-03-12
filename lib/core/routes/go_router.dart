@@ -17,7 +17,7 @@ import 'package:nasa_app_challenge/features/welcome/presentation/pages/splash_pa
 final apodsBloc = GetIt.I.get<APODsBloc>();
 
 final goRouterConfig = GoRouter(
-  initialLocation: kDebugMode ? AppRoutes.home.path : AppRoutes.splash.path,
+  initialLocation: kDebugMode ? AppRoutes.splash.path : AppRoutes.splash.path,
   routes: [
     GoRoute(
       name: AppRoutes.splash.name,

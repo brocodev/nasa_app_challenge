@@ -8,7 +8,7 @@ enum MediaType { image, video, audio }
 @freezed
 class MediaContentRequest with _$MediaContentRequest {
   const factory MediaContentRequest({
-    required int page,
+    @Default(1) int page,
     @JsonKey(name: 'q') String? query,
     @JsonKey(name: 'center') bool? nasaCenterPublishedIt,
     @JsonKey(toJson: _keywordsToJson) @Default([]) List<String> keywords,
