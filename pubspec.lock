@@ -521,18 +521,18 @@ packages:
     dependency: "direct main"
     description:
       name: injectable
-      sha256: cd3c422e13270c81f64ab73c80406b2b2ed563fe59d0ff2093eb7eee63d0bbeb
+      sha256: bbaddc57f12f88827dc085dbfa8f8fc24ef0060377f55142f889f1bc77bf013d
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.2"
+    version: "2.3.4"
   injectable_generator:
     dependency: "direct dev"
     description:
       name: injectable_generator
-      sha256: "7fb573114f8bbdd169f7ae9b0bcd13f464e8170454c27be816d5a1bb39ac8086"
+      sha256: "9d4cf34760a0d80ee9ee7230de6daad20f7bf41e0b4f319736bebee1575a8a6f"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.2"
+    version: "2.5.0"
   internet_connection_checker:
     dependency: "direct main"
     description:

@@ -42,3 +42,8 @@ app.*.map.json
 
 # Test related
 coverage
+
+*.g.dart
+*.freezed.dart
+*.lock
+*.config.dart
