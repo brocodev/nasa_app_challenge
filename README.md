@@ -12,6 +12,22 @@ A Very Good Project created by Very Good CLI.
 
 ## Getting Started 🚀
 
+Download the project dependencies and run the commands to generate the necessary code.
+
+```sh
+# ui_common
+$ cd packages/ui_common && flutter pub get && dart run build_runner build -d
+
+# nasa_core
+$ cd ../nasa_core && flutter pub get && flutter packages pub run build_runner build -d
+
+# nasa_api
+$ cd ../nasa_api && flutter pub get
+
+# app
+$ cd ../../ && flutter pub get && flutter pub get && dart run build_runner build -d
+```
+
 This project contains 3 flavors:
 
 - development
@@ -22,38 +38,17 @@ To run the desired flavor either use the launch configuration in VSCode/Android 
 
 ```sh
 # Development
-$ flutter run --flavor development --target lib/main_development.dart
+$ flutter run --flavor development --target lib/main_development.dart --dart-define NASA_API_KEY=DEMO_KEY
 
 # Staging
-$ flutter run --flavor staging --target lib/main_staging.dart
+$ flutter run --flavor staging --target lib/main_staging.dart --dart-define NASA_API_KEY=DEMO_KEY
 
 # Production
-$ flutter run --flavor production --target lib/main_production.dart
+$ flutter run --flavor production --target lib/main_production.dart --dart-define NASA_API_KEY=DEMO_KEY
 ```
 
-_\*Nasa App Challenge works on iOS, Android, Web, and Windows._
+_\*To create your own API_KEY consult the documentation at https://api.nasa.gov/._
 
----
-
-## Running Tests 🧪
-
-To run all unit and widget tests use the following command:
-
-```sh
-$ flutter test --coverage --test-randomize-ordering-seed random
-```
-
-To view the generated coverage report you can use [lcov](https://github.com/linux-test-project/lcov).
-
-```sh
-# Generate Coverage Report
-$ genhtml coverage/lcov.info -o coverage/
-
-# Open Coverage Report
-$ open coverage/index.html
-```
-
----
 
 ## Working with Translations 🌐
 
